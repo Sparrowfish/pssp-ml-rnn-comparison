@@ -95,7 +95,7 @@ Appending the global amino acid composition of each protein (a 20-dimensional fr
 
 #### 3.5 BLOSUM62 Encoding: Accuracy 69%, E-Recall 0.50
 
-One-hot encoding is biochemically uninformative — it treats all amino acid substitutions as equally large. BLOSUM62 replaces the binary indicator vector with a 20-dimensional row from the BLOSUM62 substitution matrix, where each element encodes the log-odds probability of a substitution observed in aligned blocks of evolutionarily related sequences. Biochemically similar amino acids (e.g. Leu/Ile, Asp/Glu) have similar BLOSUM62 vectors, enabling the model to generalise across conservative substitutions.
+One-hot encoding is biochemically uninformative; it treats all amino acid substitutions as equally large. BLOSUM62 replaces the binary indicator vector with a 20-dimensional row from the BLOSUM62 substitution matrix, where each element encodes the log-odds probability of a substitution observed in aligned blocks of evolutionarily related sequences. Biochemically similar amino acids (e.g. Leu/Ile, Asp/Glu) have similar BLOSUM62 vectors, enabling the model to generalise across conservative substitutions.
 
 ```
               precision    recall  f1-score   support
@@ -198,6 +198,6 @@ jupyter notebook 04_bilstm_blosum62.ipynb
 The remaining gap to state-of-the-art (~85–90%) is primarily explained by the absence of evolutionary information. Protein language models such as ESM-2 (Lin et al., 2023) are pre-trained on 250 million sequences and produce per-residue embeddings that implicitly encode conservation, co-evolution, and structural propensity. Replacing BLOSUM62 input with ESM-2 embeddings is the highest-leverage extension of this work.
 
 Additional directions:
-- **Per-protein error analysis** — characterise which structural classes (all-β proteins, membrane proteins, intrinsically disordered regions) drive the residual error
-- **Attention-based architectures** — transformer encoder with self-attention over the full sequence, enabling direct inspection of long-range dependencies
-- **Larger dataset** — the current ~500-protein dataset is small by deep learning standards; scaling to several thousand proteins with the same diversity protocol would likely improve BiLSTM performance substantially
+- **Per-protein error analysis**: characterise which structural classes (all-β proteins, membrane proteins, intrinsically disordered regions) drive the residual error
+- **Attention-based architectures**: transformer encoder with self-attention over the full sequence, enabling direct inspection of long-range dependencies
+- **Larger dataset**: the current ~500-protein dataset is small by deep learning standards; scaling to several thousand proteins with the same diversity protocol would likely improve BiLSTM performance substantially
