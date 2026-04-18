@@ -18,19 +18,6 @@ Labels are derived from DSSP (Define Secondary Structure of Proteins), which ass
 
 ---
 
-## Repository Structure
-
-```
-.
-├── 01_data_collection.ipynb       # PDB query, DSSP labelling, dataset construction
-├── 02_baseline_models.ipynb       # Random Forest and XGBoost with one-hot encoding
-├── 03_blosum62_encoding.ipynb     # BLOSUM62 substitution matrix encoding
-├── 04_bilstm_blosum62.ipynb       # Bidirectional LSTM with BLOSUM62 input
-└── README.md
-```
-
----
-
 ## Development Narrative
 
 ### 1. Initial Dataset and Baseline (Inflated: 89%)
@@ -61,7 +48,7 @@ The 89% figure is an artifact of two compounding problems:
 
 **One chain per PDB entry.** Multi-chain assemblies (ribosomes, viral capsids) can contribute dozens of chains from a single structure, skewing the dataset toward those protein families. Only the longest valid chain per PDB entry was retained.
 
-After applying these corrections, the dataset comprised ~500 structurally and sequentially diverse proteins. Accuracy under the corrected protocol fell to **60%** — reflecting genuine generalisation performance.
+After applying these corrections, the dataset comprised ~500 structurally and sequentially diverse proteins. Accuracy under the corrected protocol fell to **60%**, reflecting genuine generalisation performance.
 
 ---
 
@@ -69,7 +56,7 @@ After applying these corrections, the dataset comprised ~500 structurally and se
 
 #### 3.1 Window Size (5 → 15: +6% Accuracy | 15 → 21: No Improvement)
 
-Increasing the window from 5 to 15 residues improved accuracy from 60% to 66%, confirming that secondary structure depends on local sequence context beyond the immediate residue. Expanding further to 21 produced no gain. α-helix propensity is largely determined by local sequence patterns capturable within a window of ~15 residues. β-strand identity, however, is defined by hydrogen bonding between strands that may be hundreds of residues apart in sequence — a fundamental non-locality that no window size can resolve. Beyond ~15 residues, the window ceiling is a structural limitation of the approach, not a tunable hyperparameter.
+Increasing the window from 5 to 15 residues improved accuracy from 60% to 66%, confirming that secondary structure depends on local sequence context beyond the immediate residue. Expanding further to 21 produced no gain. α-helix propensity is largely determined by local sequence patterns capturable within a window of ~15 residues. β-strand identity, however, is defined by hydrogen bonding between strands that may be hundreds of residues apart in sequence, a fundamental non-locality that no window size can resolve. Beyond ~15 residues, the window ceiling is a structural limitation of the approach, not a tunable hyperparameter.
 
 #### 3.2 Class Weighting: Modest E Improvement
 
@@ -105,7 +92,7 @@ One-hot encoding is biochemically uninformative; it treats all amino acid substi
     accuracy                           0.69     33209
 ```
 
-E-recall improved from 0.42 to 0.50 — the largest single gain from any feature engineering step.
+E-recall improved from 0.42 to 0.50, the largest single gain from any feature engineering step.
 
 ---
 
