@@ -38,7 +38,7 @@ Fixed by: splitting at the **protein level**, sampling one representative per 30
 
 **Structural ceiling**: no window size fixes β-strand recall, because strands pair with partners that can be hundreds of residues away — a non-locality no fixed window can resolve. This diagnosis motivated every step after it.
 
-### 3. Sequence models — solving non-locality (70%+)
+### 3. Sequence models: solving non-locality (70%+)
 
 - **Notebook 4 - BiLSTM (BLOSUM62)**: processes the whole sequence in both directions, so every residue's representation includes full long-range context. **70% accuracy, E-recall 0.57.**
 - **Notebook 5 - Transformer (BLOSUM62)**: self-attention connects any two residues in one hop, instead of the BiLSTM's step-by-step chain. This is the more architecturally direct fix for strand pairing, at the cost of needing more data than a ~480-protein training set ideally provides. 
